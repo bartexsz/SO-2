@@ -8,9 +8,6 @@ public abstract class Algorithm {
 		
 		this.list=list;
 	}
-	public Process activeProcess(){
-	
-		return list.get(0);
-	}
+	public abstract Process activeProcess();
 }
 //cus takiego?
