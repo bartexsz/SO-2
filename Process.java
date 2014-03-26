@@ -1,8 +1,7 @@
-
 public class Process {
 	
 	private int id;
-	private int procTime;
+	private int procTime; //id i procTime - mogą przydać się później przy statystykach
 	private int remaining;
 	
 	public Process()
@@ -21,7 +20,7 @@ public class Process {
 	
 	public void doOnce()
 	{
-		remaining --;
+		remaining --; // wywoływane jeśli został przydzielony procesor
 	}
 	
 	public boolean isDone()
