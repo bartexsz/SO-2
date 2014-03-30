@@ -3,8 +3,8 @@ public class Generator {
 	
 	public int id=0;
 	Process next;
-	boolean active;
-	int timeNext;
+	static boolean active;
+	static int timeNext;
 	
 	public void generate(){
 		
@@ -25,19 +25,19 @@ public class Generator {
 			return true;
 		return false;
 	}
-	public boolean isActive(){
+	public static boolean isActive(){
 		
 		return active;
 	}
-	public void switchOn(){
+	public static void switchOn(){
 		
 		active=true;
 	}
-	public void switchOff(){
+	public static void switchOff(){
 		
 		active=false;
 	}
-	public void updateTime(){
+	public static void updateTime(){
 		
 		if(timeNext>0)
 			timeNext--;
