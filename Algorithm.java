@@ -9,5 +9,6 @@ public abstract class Algorithm {
 		this.list=list;
 	}
 	public abstract Process activeProcess();
+	
+	public abstract void updateList(ArrayList<Process> list);
 }
-//cus takiego?

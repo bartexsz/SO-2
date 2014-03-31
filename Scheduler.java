@@ -14,6 +14,7 @@ public class Scheduler {
 	public void assignProcess()
 	{
 		checkGenerator();
+		activeAlgorithm.updateList(processList);
 		if(!processList.isEmpty())
 		{
 			activeAlgorithm.activeProcess().doOnce();
