@@ -2,9 +2,9 @@ import java.util.*;
 public class Generator {
 	
 	public int id=0;
-	Process next;
+	Process next = null;
 	static boolean active;
-	static int timeNext;
+	static int timeNext = 0;
 	
 	public void generate(){
 		
@@ -16,7 +16,7 @@ public class Generator {
 		
 		generate();
 		Random random = new Random();
-		timeNext=random.nextInt(6);
+		timeNext=random.nextInt(30);
 		return next;	
 	}
 	public boolean isReady(){

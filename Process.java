@@ -1,7 +1,8 @@
 public class Process {
 	
 	private int id;
-	private int procTime; //id i procTime - mog¹ przydaæ siê póŸniej przy statystykach
+	private int procTime; //id i procTime - mogÄ… przydaÄ‡ siÄ™ pÃ³niej przy statystykach
+	public int waitTime;
 	private int remaining;
 	
 	public Process()
@@ -9,6 +10,7 @@ public class Process {
 		id=-1;
 		procTime=0;
 		remaining=0;
+		waitTime = 0;
 	}
 	
 	public Process(int id, int procTime)
@@ -16,11 +18,12 @@ public class Process {
 		this.id = id;
 		this.procTime = procTime;
 		this.remaining = procTime;
+		waitTime = 0;
 	}
 	
 	public void doOnce()
 	{
-		remaining --; // wywo³ywane jeœli zosta³ przydzielony procesor
+		remaining --; // wywoÅ‚ywane jeÅ›li zostaÅ‚ przydzielony procesor
 	}
 	
 	public boolean isDone()
