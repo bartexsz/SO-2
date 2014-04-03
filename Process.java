@@ -30,4 +30,10 @@ public class Process {
 	{
 		return (remaining<1) ? true : false;
 	}
+	public int getprocTime(){
+		return procTime;
+	}
+	public int getremaining(){
+		return remaining;
+	}
 }
