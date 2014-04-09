@@ -5,6 +5,7 @@ public class Scheduler {
 	public ArrayList<Process> processList;
 	public ArrayList<Process> statpList;
 	private Generator gen;
+	int worktime = 0;
 	
 	public Scheduler(Generator g)
 	{
@@ -16,6 +17,7 @@ public class Scheduler {
 	
 	public void assignProcess()
 	{
+		worktime++;
 		checkGenerator();
 		for(int i = 0; i < processList.size(); i++)
 		{
@@ -50,6 +52,9 @@ public class Scheduler {
 	public void SetAlgorithm(Algorithm algorithm)
 	{
 		this.activeAlgorithm = algorithm;
+		worktime = 0;
+		statpList.clear();
+		gen.id = 0;
 	}
 	public void clearList()
 	{

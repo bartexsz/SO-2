@@ -5,6 +5,8 @@ public class Generator {
 	Process next = null;
 	static boolean active;
 	static int timeNext = 0;
+	public static int maxProcTime = 30;
+	public static int maxTimeNext = 30;
 	
 	public Generator()
 	{
@@ -14,14 +16,14 @@ public class Generator {
 	public void generate(){
 		
 		Random random = new Random();
-		next = new Process(id, random.nextInt(30));
+		next = new Process(id, random.nextInt(maxProcTime));
 		id++;
 	}
 	public Process getNext(){
 		
 		generate();
 		Random random = new Random();
-		timeNext=random.nextInt(30);
+		timeNext=random.nextInt(maxTimeNext);
 		return next;	
 	}
 	public boolean isReady(){

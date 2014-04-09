@@ -29,8 +29,9 @@ public class Main {
 					srednia+=p.waitTime;
 				}
 				if(!cpu.s.statpList.isEmpty())srednia/=cpu.s.statpList.size();
-				System.out.println("Średni czas" + srednia);
-				System.out.println("Ilość  procesów" + cpu.s.statpList.size());
+				System.out.println("Średni czas: " + srednia);
+				System.out.println("Ilość procesów: " + cpu.s.statpList.size());
+				System.out.println("Wykonanych cykli: " + cpu.s.worktime);
 			}
 			else if(a.equals("switch"))
 			{
@@ -46,6 +47,29 @@ public class Main {
 				a = f.next();
 				cpu.s  = new Scheduler(new SGenerator(a));
 				cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
+			}
+			else if(a.equals("loadgen"))
+			{
+				cpu.s = new Scheduler(new Generator());
+				cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
+			}
+			else if(a.equals("showlist"))
+			{
+				System.out.println("Aktywne: ");
+				for(Process p : cpu.s.processList)
+				{
+					System.out.println(p);
+				}
+				System.out.println("Ukończone: ");
+				for(Process p : cpu.s.statpList)
+				{
+					System.out.println(p);
+				}
+			}
+			else if(a.equals("genconfig"))
+			{
+				Generator.maxProcTime = f.nextInt();
+				Generator.maxTimeNext = f.nextInt();
 			}
 			a = f.next();
 		}

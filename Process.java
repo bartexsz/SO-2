@@ -36,4 +36,8 @@ public class Process {
 	public int getremaining(){
 		return remaining;
 	}
+	public String toString()
+	{
+		return id + " " + remaining + " " + procTime + " " + waitTime;
+	}
 }
