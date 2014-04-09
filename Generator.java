@@ -6,6 +6,11 @@ public class Generator {
 	static boolean active;
 	static int timeNext = 0;
 	
+	public Generator()
+	{
+		active = true;
+	}
+	
 	public void generate(){
 		
 		Random random = new Random();
@@ -21,8 +26,7 @@ public class Generator {
 	}
 	public boolean isReady(){
 		
-		if(timeNext==0)
-			return true;
+		if(timeNext<=0) return true;
 		return false;
 	}
 	public static boolean isActive(){

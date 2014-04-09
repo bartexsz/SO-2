@@ -1,26 +1,26 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-public class main {
+public class Main {
 
 	/**
 	 * @param args
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws FileNotFoundException {
 		CPU cpu = new CPU(new Scheduler(new Generator()));
 		cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
 		cpu.active = true;
-		cpu.start();
 		Scanner f = new Scanner(System.in);
 		String a = f.next();
 		while(a.charAt(0) != 'q')
 		{
-			if(a.compareTo("start") == 0)
+			if(a.equals("start"))
 			{	
 				cpu.start();
 			}
-			else if(a.compareTo("stop") == 0)
+			else if(a.equals("stop"))
 			{
 				cpu.t.suspend();
 				int srednia = 0;
@@ -32,7 +32,7 @@ public class main {
 				System.out.println("Średni czas" + srednia);
 				System.out.println("Ilość  procesów" + cpu.s.statpList.size());
 			}
-			else if(a.compareTo("switch") == 0)
+			else if(a.equals("switch"))
 			{
 				a = f.next();
 				if(a.compareTo("FCFS") == 0) cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
@@ -40,6 +40,12 @@ public class main {
 				else if(a.compareTo("SJF") == 0) cpu.s.SetAlgorithm(new SJF(cpu.s.processList));
 				else if(a.compareTo("SJFw") == 0) cpu.s.SetAlgorithm(new SJFw(cpu.s.processList));
 				cpu.s.clearList();
+			}
+			else if(a.equals("load"))
+			{
+				a = f.next();
+				cpu.s  = new Scheduler(new SGenerator(a));
+				cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
 			}
 			a = f.next();
 		}

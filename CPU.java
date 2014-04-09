@@ -10,18 +10,21 @@ public class CPU implements Runnable {
 		Generator.switchOn();
 	}
 	
-	public void doCycle(){
-		while(Generator.isActive()){
-		Generator.updateTime();
-		s.assignProcess();	
-		}
+	public void doCycle() throws InterruptedException{
+		if(Generator.isActive()) Generator.updateTime();
+		s.assignProcess();
+		Thread.sleep(10);
 	}
 
 	@Override
 	public void run() {
 		while(active)
 		{
-			doCycle();
+			try {
+				doCycle();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public void start()
