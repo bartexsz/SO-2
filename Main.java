@@ -71,6 +71,10 @@ public class Main {
 				Generator.maxProcTime = f.nextInt();
 				Generator.maxTimeNext = f.nextInt();
 			}
+			else if(a.equals("rotconfig"))
+			{
+				Rot.deltaTime = f.nextInt();
+			}
 			a = f.next();
 		}
 		
