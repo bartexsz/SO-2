@@ -2,13 +2,13 @@
 import java.util.*;
 public abstract class Algorithm {
 
-	ArrayList<Process> list;
+	ArrayList<Request> list;
 	
-	public Algorithm(ArrayList<Process> list){
+	public Algorithm(ArrayList<Request> list){
 		
 		this.list=list;
 	}
-	public abstract Process activeProcess();
+	public abstract Request activeRequest();
 	
-	public abstract void updateList(ArrayList<Process> list);
+	public abstract void updateList(ArrayList<Request> list);
 }
