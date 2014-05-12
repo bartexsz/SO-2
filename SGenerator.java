@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class SGenerator extends Generator {
-	Queue<SProcess> list;
+	Queue<SRequest> list;
 	
 	public SGenerator() {
 	}
@@ -14,27 +14,27 @@ public class SGenerator extends Generator {
 	{
 		active = true;
 		Scanner f = new Scanner(new File(filename));
-		list = new LinkedList<SProcess>();
-		int id, procTime, delay;
+		list = new LinkedList<SRequest>();
+		int id, position, delay;
 		while(f.hasNext())
 		{
 			id = f.nextInt();
-			procTime = f.nextInt();
+			position = f.nextInt();
 			delay = f.nextInt();
-			list.add(new SProcess(id,procTime,delay));
+			list.add(new SRequest(id,position,delay));
 		}
 		f.close();
 		timeNext = list.peek().delay;
 	}
 	
-	public Process getNext()
+	public Request getNext()
 	{
 		if(list.isEmpty())
 		{
 			switchOff();
 			return null;
 		}
-		Process a = list.poll();
+		Request a = list.poll();
 		if(list.isEmpty())
 		{
 			switchOff();

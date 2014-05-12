@@ -1,11 +1,11 @@
-import java.util.*;
+import java.util.Random;
 public class Generator {
 	
 	public int id=0;
-	Process next = null;
+	Request next = null;
 	static boolean active;
 	static int timeNext = 0;
-	public static int maxProcTime = 30;
+	public static int maxPosition = 30;
 	public static int maxTimeNext = 30;
 	
 	public Generator()
@@ -16,10 +16,10 @@ public class Generator {
 	public void generate(){
 		
 		Random random = new Random();
-		next = new Process(id, random.nextInt(maxProcTime));
+		next = new Request(id, random.nextInt(maxPosition));
 		id++;
 	}
-	public Process getNext(){
+	public Request getNext(){
 		
 		generate();
 		Random random = new Random();
