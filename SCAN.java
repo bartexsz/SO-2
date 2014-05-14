@@ -2,30 +2,42 @@ import java.util.ArrayList;
 
 public class SCAN extends Algorithm {
 
-	int index=0;
-	int preindex=-1;
+	int position=1;
+	int preposition=0;
 	
 	public SCAN(ArrayList<Request> list){
 		super(list);
 	}
 	
 	public Request activeRequest(){
-		if(index==list.size()-1){
-			index=list.size()-2;
-			preindex=list.size()-1;
-			return list.get(index);
-		}else if(index==0){
-			index=1;
-			preindex=0;
-			return list.get(index);
-		}else if(preindex>index){
-			index--;
-			preindex--;
-			return list.get(index);
+		if(position==200){
+			position=1;
+			preposition=0;
+			for(int i=0; i<list.size(); i++){
+				if(list.get(i).position==position) return list.get(i);
+			}
+			return null;
+		}else if(position==1 && preposition==2){
+			position++;
+			preposition--;
+			for(int i=0; i<list.size(); i++){
+				if(list.get(i).position==position) return list.get(i);
+			}
+			return null;
+		}else if(preposition>position){
+			position--;
+			preposition--;
+			for(int i=0; i<list.size(); i++){
+				if(list.get(i).position==position) return list.get(i);
+			}
+			return null;
 		}else{
-			index++;
-			preindex++;
-			return list.get(index);
+			position++;
+			preposition++;
+			for(int i=0; i<list.size(); i++){
+				if(list.get(i).position==position) return list.get(i);
+			}
+			return null;
 		}
 	}
 	
