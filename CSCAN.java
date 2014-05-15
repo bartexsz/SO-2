@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class CSCAN extends Algorithm {
 
+	
 	int position=1;
 	int preposition=0;
 	
@@ -10,6 +11,7 @@ public class CSCAN extends Algorithm {
 	}
 	
 	public Request activeRequest(){
+		Disk.changes++;
 		if(position==200){
 			position=1;
 			preposition=0;
