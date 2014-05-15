@@ -12,7 +12,7 @@ public class CPU implements Runnable {
 	
 	public void doCycle() throws InterruptedException{
 		if(Generator.isActive()) Generator.updateTime();
-		s.assignProcess();
+		s.assignRequest();
 		Thread.sleep(10);
 	}
 

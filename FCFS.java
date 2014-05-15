@@ -4,23 +4,29 @@ import java.util.Queue;
 
 
 public class FCFS extends Algorithm {
-	
-	Queue<Process> listq;
-	
-	public FCFS(ArrayList<Process> list) {
+
+	private Queue<Request> queue;
+	public FCFS(ArrayList<Request> list) {
 		super(list);
-		listq= new LinkedList<Process>(list);
+		queue = new LinkedList<Request>(list);
 	}
 
 	@Override
-	public Process activeProcess() {
-		return listq.peek();
+	public Request activeRequest() {
+		Request r = queue.remove();
+		Disk.changes += abs(Disk.pos - r.position);
+		Disk.pos = r.position;
+		return r;
 	}
 
 	@Override
-	public void updateList(ArrayList<Process> list) {
-		listq= new LinkedList<Process>(list);
-		
+	public void updateList(ArrayList<Request> list) {
+		queue = new LinkedList<Request>(list);
+
+	}
+	public int abs(int a)
+	{
+		return (a < 0) ? -a : a;
 	}
 
 }

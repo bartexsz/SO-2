@@ -6,13 +6,13 @@ public class SRequest extends Request implements Comparable<SRequest>{
 		delay = 0;
 	}
 
-	public SRequest(int id, int position) {
-		super(id, position);
+	public SRequest(int id, int position,int deadline) {
+		super(id, position, deadline);
 		delay = 0;
 	}
-	public SRequest(int id, int position, int delay)
+	public SRequest(int id, int position, int deadline, int delay)
 	{
-		super(id, position);
+		super(id, position, deadline);
 		this.delay = delay;
 	}
 

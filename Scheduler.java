@@ -2,42 +2,34 @@ import java.util.ArrayList;
 
 public class Scheduler {
 	private Algorithm activeAlgorithm;
-	public ArrayList<Process> processList;
-	public ArrayList<Process> statpList;
+	public ArrayList<Request> requestList;
+	public ArrayList<Request> statrList;
 	private Generator gen;
-	int worktime = 0;
 	
 	public Scheduler(Generator g)
 	{
 		activeAlgorithm = null;
-		processList = new ArrayList<Process>();
-		statpList = new ArrayList<Process>();
+		requestList = new ArrayList<Request>();
+		statrList = new ArrayList<Request>();
 		gen = g;
 	}
 	
-	public void assignProcess()
+	public void assignRequest()
 	{
-		worktime++;
 		checkGenerator();
-		for(int i = 0; i < processList.size(); i++)
+		for(int i = 0; i < requestList.size(); i++)
 		{
-			if(processList.get(i).isDone())
-			{
-				statpList.add(processList.get(i));
-				processList.remove(i);
-				i--;
-			}
-			else
-			{
-				processList.get(i).waitTime++;
-			}
+			requestList.get(i).waitTime++;
+			
 		}
-		activeAlgorithm.updateList(processList);
-		if(!processList.isEmpty())
+		activeAlgorithm.updateList(requestList);
+		if(!requestList.isEmpty())
 		{
-			Process p = activeAlgorithm.activeProcess();
-			p.doOnce();
+			Request p = activeAlgorithm.activeRequest();
+			if(activeAlgorithm instanceof FCFS) requestList.remove(0);
+			if(p == null) return;
 			p.waitTime--;
+			statrList.add(p);
 		}
 	}
 	
@@ -45,20 +37,19 @@ public class Scheduler {
 	{
 		if(Generator.isActive() && gen.isReady())
 		{
-			processList.add(gen.getNext());
+			requestList.add(gen.getNext());
 		}
 	}
 	
 	public void SetAlgorithm(Algorithm algorithm)
 	{
 		this.activeAlgorithm = algorithm;
-		worktime = 0;
-		statpList.clear();
+		requestList.clear();
 		gen.id = 0;
 	}
 	public void clearList()
 	{
-		statpList.clear();
-		processList.clear();
+		statrList.clear();
+		requestList.clear();
 	}
 }

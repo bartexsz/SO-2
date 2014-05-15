@@ -10,6 +10,7 @@ public class SCAN extends Algorithm {
 	}
 	
 	public Request activeRequest(){
+		Disk.changes++;
 		if(position==200){
 			position=199;
 			preposition=200;

@@ -9,9 +9,10 @@ public class Main {
 	 * @throws FileNotFoundException 
 	 * @throws InterruptedException 
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		CPU cpu = new CPU(new Scheduler(new Generator()));
-		cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
+		cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
 		cpu.active = true;
 		Scanner f = new Scanner(System.in);
 		String a = f.next();
@@ -25,14 +26,14 @@ public class Main {
 			{
 				cpu.t.suspend();
 				int srednia = 0;
-				for(Process p : cpu.s.statpList)
+				for(Request r : cpu.s.statrList)
 				{
-					srednia+=p.waitTime;
+					srednia+=r.waitTime;
 				}
-				if(!cpu.s.statpList.isEmpty())srednia/=cpu.s.statpList.size();
+				if(!cpu.s.statrList.isEmpty())srednia/=cpu.s.statrList.size();
 				System.out.println("Średni czas: " + srednia);
-				System.out.println("Ilość procesów: " + cpu.s.statpList.size());
-				System.out.println("Wykonanych cykli: " + cpu.s.worktime);
+				System.out.println("Ilość żądań: " + cpu.s.statrList.size());
+				System.out.println("Ilość przesunięć głowicy: " + Disk.changes);
 			}
 			else if(a.equals("startstoptime")) // Uruchamia cpu na określny czas w milisekundach
 			{
@@ -41,56 +42,53 @@ public class Main {
 				Thread.sleep(t);
 				cpu.t.suspend();
 				int srednia = 0;
-				for(Process p : cpu.s.statpList)
+				for(Request r : cpu.s.statrList)
 				{
-					srednia+=p.waitTime;
+					srednia+=r.waitTime;
 				}
-				if(!cpu.s.statpList.isEmpty())srednia/=cpu.s.statpList.size();
+				if(!cpu.s.statrList.isEmpty())srednia/=cpu.s.statrList.size();
 				System.out.println("Średni czas: " + srednia);
-				System.out.println("Ilość procesów: " + cpu.s.statpList.size());
-				System.out.println("Wykonanych cykli: " + cpu.s.worktime);
+				System.out.println("Ilość żądań: " + cpu.s.statrList.size());
+				System.out.println("Ilość przesunięć głowicy: " + Disk.changes);
 			}
 			else if(a.equals("switch")) // Zmienia algorytm przydzialający zasoby
 			{
 				a = f.next();
-				if(a.compareTo("FCFS") == 0) cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
-				else if(a.compareTo("ROT") == 0) cpu.s.SetAlgorithm(new Rot(cpu.s.processList));
-				else if(a.compareTo("SJF") == 0) cpu.s.SetAlgorithm(new SJF(cpu.s.processList));
-				else if(a.compareTo("SJFw") == 0) cpu.s.SetAlgorithm(new SJFw(cpu.s.processList));
+				if(a.compareTo("SSTF") == 0) cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
+				else if(a.compareTo("FCFS") == 0) cpu.s.SetAlgorithm(new FCFS(cpu.s.requestList));
+				else if(a.compareTo("SCAN") == 0) cpu.s.SetAlgorithm(new SCAN(cpu.s.requestList));
+				else if(a.compareTo("CSCAN") == 0) cpu.s.SetAlgorithm(new CSCAN(cpu.s.requestList));
 				cpu.s.clearList();
 			}
 			else if(a.equals("load")) // Wczytuje generator z gotowym zestawem procesów
 			{
 				a = f.next();
 				cpu.s  = new Scheduler(new SGenerator(a));
-				cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
+				cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
 			}
 			else if(a.equals("loadgen")) // Wczytuje generator losowych procesów
 			{
 				cpu.s = new Scheduler(new Generator());
-				cpu.s.SetAlgorithm(new FCFS(cpu.s.processList));
+				cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
 			}
 			else if(a.equals("showlist")) // wyświetla listę procesów
 			{
 				System.out.println("Aktywne: ");
-				for(Process p : cpu.s.processList)
+				for(Request r : cpu.s.requestList)
 				{
-					System.out.println(p);
+					System.out.println(r);
 				}
 				System.out.println("Ukończone: ");
-				for(Process p : cpu.s.statpList)
+				for(Request r : cpu.s.statrList)
 				{
-					System.out.println(p);
+					System.out.println(r);
 				}
 			}
 			else if(a.equals("genconfig")) //Zmienia ustawienia generatora procesów
 			{
-				Generator.maxProcTime = f.nextInt();
+				Generator.maxPosition = f.nextInt();
+				Disk.size = Generator.maxPosition;
 				Generator.maxTimeNext = f.nextInt();
-			}
-			else if(a.equals("rotconfig")) // Zmienia ustawienia algorymu rotacyjnego
-			{
-				Rot.deltaTime = f.nextInt();
 			}
 			a = f.next();
 		}

@@ -21,7 +21,7 @@ public class SGenerator extends Generator {
 			id = f.nextInt();
 			position = f.nextInt();
 			delay = f.nextInt();
-			list.add(new SRequest(id,position,delay));
+			list.add(new SRequest(id,position, -2, delay));
 		}
 		f.close();
 		timeNext = list.peek().delay;
