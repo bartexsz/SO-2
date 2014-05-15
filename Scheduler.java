@@ -27,6 +27,17 @@ public class Scheduler {
 		{
 			Request p = activeAlgorithm.activeRequest();
 			if(activeAlgorithm instanceof FCFS) requestList.remove(0);
+			else if(activeAlgorithm instanceof SSTF)
+			{
+				for(int i = 0; i< requestList.size(); i++)
+				{
+					if(p.equals(requestList.get(i)))
+					{
+						requestList.remove(i);
+						break;
+					}
+				}
+			}
 			if(p == null) return;
 			p.waitTime--;
 			statrList.add(p);
@@ -35,7 +46,7 @@ public class Scheduler {
 	
 	public void checkGenerator()
 	{
-		if(Generator.isActive() && gen.isReady())
+		while(Generator.isActive() && gen.isReady())
 		{
 			requestList.add(gen.getNext());
 		}

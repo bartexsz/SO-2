@@ -6,7 +6,7 @@ public class Generator {
 	static boolean active;
 	static int timeNext = 0;
 	public static int maxPosition = 99;
-	public static int maxTimeNext = 30;
+	public static int maxTimeNext = 4;
 	
 	public Generator()
 	{
