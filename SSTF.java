@@ -19,8 +19,10 @@ public class SSTF extends Algorithm {
 			}
 		}
 		Request r = list.get(shortest);
-		Disk.changes += abs(r.position - Disk.pos);
-		list.remove(shortest);
+		int diff = abs(r.position - Disk.pos);
+		Disk.changes += diff;
+		for(Request p : list)p.waitTime+=diff;
+		Disk.pos = r.position;
 		return r;
 	}
 

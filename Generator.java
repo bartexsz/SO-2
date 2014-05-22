@@ -5,7 +5,7 @@ public class Generator {
 	Request next = null;
 	static boolean active;
 	static int timeNext = 0;
-	public static int maxPosition = 99;
+	public static int maxPosition = 200;
 	public static int maxTimeNext = 4;
 	
 	public Generator()
@@ -16,7 +16,7 @@ public class Generator {
 	public void generate(){
 		
 		Random random = new Random();
-		next = new Request(id, 1+random.nextInt(maxPosition), -2);
+		next = new Request(id, 1+random.nextInt(maxPosition), random.nextInt(6) == 0 ? random.nextInt(50) : -2);
 		id++;
 	}
 	public Request getNext(){

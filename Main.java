@@ -13,6 +13,7 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		CPU cpu = new CPU(new Scheduler(new Generator()));
 		cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
+		cpu.s.setRealAlgorithm(new EDF(cpu.s.realRequestList));
 		cpu.active = true;
 		Scanner f = new Scanner(System.in);
 		String a = f.next();
@@ -58,7 +59,10 @@ public class Main {
 				else if(a.compareTo("FCFS") == 0) cpu.s.SetAlgorithm(new FCFS(cpu.s.requestList));
 				else if(a.compareTo("SCAN") == 0) cpu.s.SetAlgorithm(new SCAN(cpu.s.requestList));
 				else if(a.compareTo("CSCAN") == 0) cpu.s.SetAlgorithm(new CSCAN(cpu.s.requestList));
+				else if(a.compareTo("EDF") == 0) cpu.s.setRealAlgorithm(new EDF(cpu.s.realRequestList));
+				else if(a.compareTo("FD-SCAN") == 0) cpu.s.setRealAlgorithm(new FDSCAN(cpu.s.realRequestList));
 				cpu.s.clearList();
+				Disk.pos = 100;
 			}
 			else if(a.equals("load")) // Wczytuje generator z gotowym zestawem procesów
 			{
@@ -70,6 +74,7 @@ public class Main {
 			{
 				cpu.s = new Scheduler(new Generator());
 				cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
+				cpu.s.setRealAlgorithm(new EDF(cpu.s.realRequestList));
 			}
 			else if(a.equals("showlist")) // wyświetla listę procesów
 			{

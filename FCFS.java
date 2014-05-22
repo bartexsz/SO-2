@@ -14,7 +14,9 @@ public class FCFS extends Algorithm {
 	@Override
 	public Request activeRequest() {
 		Request r = queue.remove();
-		Disk.changes += abs(Disk.pos - r.position);
+		int diff = abs(r.position - Disk.pos);
+		Disk.changes += diff;
+		for(Request p : list)p.waitTime+=diff;
 		Disk.pos = r.position;
 		return r;
 	}

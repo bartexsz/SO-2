@@ -11,6 +11,7 @@ public class SCAN extends Algorithm {
 	
 	public Request activeRequest(){
 		Disk.changes++;
+		for(Request p : list)p.waitTime++;
 		if(position==200){
 			position=199;
 			preposition=200;

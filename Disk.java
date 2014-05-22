@@ -4,7 +4,7 @@ public class Disk {
 	public static int changes;
 	public static void init()
 	{
-		pos = 0;
+		pos = 100;
 		size = 200;
 		changes = 0;
 	}

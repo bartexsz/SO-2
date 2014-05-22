@@ -10,6 +10,8 @@ public class CSCAN extends Algorithm {
 	}
 	
 	public Request activeRequest(){
+		for(Request p : list)p.waitTime++;
+		Disk.changes++;
 		if(position==200){
 			position=1;
 			preposition=0;

@@ -2,7 +2,9 @@ import java.util.ArrayList;
 
 public class Scheduler {
 	private Algorithm activeAlgorithm;
+	private RealAlgorithm realAlgorithm;
 	public ArrayList<Request> requestList;
+	public ArrayList<Request> realRequestList;
 	public ArrayList<Request> statrList;
 	private Generator gen;
 	
@@ -10,37 +12,85 @@ public class Scheduler {
 	{
 		activeAlgorithm = null;
 		requestList = new ArrayList<Request>();
+		realRequestList = new ArrayList<Request>();
 		statrList = new ArrayList<Request>();
 		gen = g;
 	}
 	
-	public void assignRequest()
+	public void assignRequest() throws InterruptedException
 	{
 		checkGenerator();
+		Thread.sleep(100);
 		for(int i = 0; i < requestList.size(); i++)
 		{
 			requestList.get(i).waitTime++;
 			
 		}
 		activeAlgorithm.updateList(requestList);
-		if(!requestList.isEmpty())
+		realAlgorithm.updateList(requestList);
+		realAlgorithm.updateRealList(realRequestList);
+		if(!requestList.isEmpty() || !realRequestList.isEmpty())
 		{
-			Request p = activeAlgorithm.activeRequest();
-			if(activeAlgorithm instanceof FCFS) requestList.remove(0);
-			else if(activeAlgorithm instanceof SSTF)
+			if(!realRequestList.isEmpty())
 			{
-				for(int i = 0; i< requestList.size(); i++)
+				Request p = realAlgorithm.activeRequest();
+				if(p==null) return;
+				if(p.deadline == -2)
 				{
-					if(p.equals(requestList.get(i)))
+					for(int i = 0; i< requestList.size(); i++)
 					{
-						requestList.remove(i);
-						break;
+						if(p.equals(requestList.get(i)))
+						{
+							requestList.remove(i);
+							statrList.add(p);
+							break;
+						}
+					}
+				}
+				else if(p.deadline > -1) 
+				{
+					for(int i = 0; i< realRequestList.size(); i++)
+					{
+						if(p.equals(realRequestList.get(i)))
+						{
+							realRequestList.remove(i);
+							statrList.add(p);
+							break;
+						}
+					}
+				}
+				for(int i = 0; i < realRequestList.size(); i++)
+				{
+					Request r = realRequestList.get(i);
+					r.deadline--;
+					if(r.deadline < 0)
+					{
+						realRequestList.remove(i);
+						requestList.add(r);
+						i--;
 					}
 				}
 			}
-			if(p == null) return;
-			p.waitTime--;
-			statrList.add(p);
+			else 
+			{
+				Request p = activeAlgorithm.activeRequest();
+				if(activeAlgorithm instanceof FCFS) requestList.remove(0);
+				else if(p!= null)
+				{
+					for(int i = 0; i< requestList.size(); i++)
+					{
+						if(p.equals(requestList.get(i)))
+						{
+							requestList.remove(i);
+							break;
+						}
+					}
+				}
+				else return;
+				p.waitTime--;
+				statrList.add(p);
+				
+			}
 		}
 	}
 	
@@ -48,7 +98,9 @@ public class Scheduler {
 	{
 		while(Generator.isActive() && gen.isReady())
 		{
-			requestList.add(gen.getNext());
+			Request n = gen.getNext();
+			if(n.deadline > -2) realRequestList.add(n);
+			else requestList.add(gen.getNext());
 		}
 	}
 	
@@ -62,5 +114,15 @@ public class Scheduler {
 	{
 		statrList.clear();
 		requestList.clear();
+		realRequestList.clear();
+	}
+	public void setRealAlgorithm(RealAlgorithm alg)
+	{
+		realAlgorithm = alg;
+	}
+	
+	public int abs(int a)
+	{
+		return (a < 0) ? -a : a;
 	}
 }

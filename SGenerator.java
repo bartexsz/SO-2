@@ -15,13 +15,14 @@ public class SGenerator extends Generator {
 		active = true;
 		Scanner f = new Scanner(new File(filename));
 		list = new LinkedList<SRequest>();
-		int id, position, delay;
+		int id, position, deadline, delay;
 		while(f.hasNext())
 		{
 			id = f.nextInt();
 			position = f.nextInt();
+			deadline = f.nextInt();
 			delay = f.nextInt();
-			list.add(new SRequest(id,position, -2, delay));
+			list.add(new SRequest(id,position, deadline, delay));
 		}
 		f.close();
 		timeNext = list.peek().delay;
