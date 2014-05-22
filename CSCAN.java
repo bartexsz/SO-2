@@ -11,6 +11,7 @@ public class CSCAN extends Algorithm {
 	}
 	
 	public Request activeRequest(){
+		Disk.changes++;
 		for(Request p : list)p.waitTime++;
 		if(position==200){
 			position=1;
