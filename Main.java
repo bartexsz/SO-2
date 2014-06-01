@@ -69,6 +69,7 @@ public class Main {
 				a = f.next();
 				cpu.s  = new Scheduler(new SGenerator(a));
 				cpu.s.SetAlgorithm(new SSTF(cpu.s.requestList));
+				cpu.s.setRealAlgorithm(new EDF(cpu.s.realRequestList));
 			}
 			else if(a.equals("loadgen")) // Wczytuje generator losowych procesów
 			{
