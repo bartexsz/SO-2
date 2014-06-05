@@ -20,9 +20,16 @@ public class Scheduler {
 	public void assignRequest() throws InterruptedException
 	{
 		checkGenerator();
+		if(requestList.size() < 1) return;
 		Thread.sleep(100);
 		for(int i = 0; i < requestList.size(); i++)
 		{
+			if(requestList.get(i)==null) 
+			{
+				requestList.remove(i);
+				i--;
+				continue;
+			}
 			requestList.get(i).waitTime++;
 			
 		}

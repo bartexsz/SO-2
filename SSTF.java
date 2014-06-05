@@ -13,6 +13,7 @@ public class SSTF extends Algorithm {
 		int shortest = 0;
 		for(int i = 1; i < list.size(); i++)
 		{
+			if(list.get(i) == null) continue;
 			if(abs(list.get(shortest).position - Disk.pos) > abs(list.get(i).position - Disk.pos))
 			{
 				shortest = i;
